@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Explore Games — Neon Arcade{% endblock %}
+{% block content %}
+<section class="page-intro"><p class="eyebrow">FIND YOUR NEXT OBSESSION</p><h1>Game <span class="gradient-text">library</span></h1><p>From quick arcade sessions to downloadable adventures.</p></section>
+<form class="filter-bar" method="get"><input type="search" name="q" value="{{ query }}" placeholder="Search games..." aria-label="Search games"><select name="genre"><option value="">All genres</option>{% for item in genres %}<option value="{{ item }}" {% if genre == item %}selected{% endif %}>{{ item }}</option>{% endfor %}</select><select name="type"><option value="">All formats</option><option value="browser" {% if kind == 'browser' %}selected{% endif %}>Browser</option><option value="download" {% if kind == 'download' %}selected{% endif %}>Download</option></select><button class="button button-primary" type="submit">Filter ↗</button></form>
+<div class="game-grid library-grid">
+{% for game in games %}<article class="game-card">
+  <a class="game-art {% if game.cover %}has-cover{% else %}art-default{% endif %}" href="{% url 'game_detail' game.slug %}" {% if game.cover %}style="background-image:url('{{ game.cover.url }}')"{% endif %}>
+    <span class="game-number">#{{ forloop.counter|stringformat:"02d" }}</span><span class="type-pill">{{ game.get_game_type_display }}</span>
+    {% if not game.cover %}<span class="art-symbol">✦</span><b>{{ game.title|upper }}</b><small>{{ game.genre|upper }}</small>{% endif %}
+  </a>
+  <div class="game-info"><div><span class="game-genre">{{ game.genre }}</span><h3><a href="{% url 'game_detail' game.slug %}">{{ game.title }}</a></h3></div><a class="icon-button" href="{% url 'game_detail' game.slug %}" aria-label="View {{ game.title }}">↗</a></div>
+  <p class="game-description">{{ game.description|truncatechars:100 }}</p>
+  <a class="button button-primary card-button" href="{% url 'game_detail' game.slug %}">{% if game.game_type == 'browser' %}Play game ↗{% else %}View download ↗{% endif %}</a>
+</article>{% empty %}<div class="empty-state wide-empty"><div class="empty-icon">⌕</div><h3>No games found</h3><p>Try a different search, or add games in Django admin.</p><a class="text-link" href="{% url 'snake_game' %}">Play the included Snake demo →</a></div>{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Leaderboard — Neon Arcade{% endblock %}
+{% block content %}
+<section class="page-intro"><p class="eyebrow">THE ARCADE HALL OF FAME</p><h1>Global <span class="gradient-text">leaderboard</span></h1><p>Top saved scores from Neon Arcade players.</p></section>
+<section class="section-block"><div class="leaderboard">
+{% for row in rows %}<div class="leader-row"><span class="leader-rank">{{ forloop.counter|stringformat:"02d" }}</span><span class="leader-name">{{ row.user__username }} <small>{{ row.game__title }}</small></span><span class="leader-points">{{ row.best }} PTS</span></div>{% empty %}<div class="empty-state"><h3>No scores yet</h3><p>Play a game and save your score to be the first player on the leaderboard.</p><a class="button button-primary" href="{% url 'snake_game' %}">Play Snake ↗</a></div>{% endfor %}
+</div></section>
+{% endblock %}

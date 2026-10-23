@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ game.title }} — Neon Arcade{% endblock %}
+{% block content %}
+<section class="detail-layout">
+  <div class="detail-art {% if game.cover %}has-cover{% endif %}" {% if game.cover %}style="background-image:url('{{ game.cover.url }}')"{% endif %}><span class="type-pill">{{ game.get_game_type_display }}</span>{% if not game.cover %}<div class="detail-symbol">✦</div><h2>{{ game.title|upper }}</h2><p>{{ game.genre|upper }} / NEON ARCADE</p>{% endif %}</div>
+  <div class="detail-copy"><p class="eyebrow">{{ game.genre|upper }} / GAME DETAILS</p><h1>{{ game.title }}</h1><p class="detail-description">{{ game.description }}</p><div class="detail-meta"><span>FORMAT <b>{{ game.get_game_type_display }}</b></span><span>GENRE <b>{{ game.genre }}</b></span></div>
+  {% if game.game_type == 'browser' %}
+    {% if game.slug == 'snake' %}<a class="button button-primary" href="{% url 'snake_game' %}">▶ Play now</a>{% elif game.slug == 'memory-match' %}<a class="button button-primary" href="{% url 'memory_game' %}">▶ Play now</a>{% elif game.slug == 'click-rush' %}<a class="button button-primary" href="{% url 'click_game' %}">▶ Play now</a>{% elif game.slug == 'car-race' %}<a class="button button-primary" href="{% url 'car_race_game' %}">▶ Race now</a>{% else %}<div class="notice">This browser game has been listed. Its playable page has not been configured yet.</div>{% endif %}
+  {% elif game.download_url %}<a class="button button-primary" href="{{ game.download_url }}" target="_blank" rel="noopener noreferrer">Download game ↗</a><p class="fine-print">You will be sent to the supplied download source. Download only from sources you trust.</p>
+  {% else %}<div class="notice">A download link has not been added yet. Add an authorized URL in Django admin.</div>{% endif %}
+  </div>
+</section>
+<section class="section-block"><div class="section-heading"><div><p class="eyebrow">THE LEADERBOARD</p><h2>Top <span class="gradient-text">players</span></h2></div></div><div class="leaderboard">
+{% for score in top_scores %}<div class="leader-row"><span class="leader-rank">{{ forloop.counter|stringformat:"02d" }}</span><span class="leader-name">{{ score.user.username }}</span><span class="leader-points">{{ score.points }} PTS</span></div>{% empty %}<p class="muted-copy">No scores yet. Be the first to play and post a score!</p>{% endfor %}
+</div></section>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Neon Car Racer — Neon Arcade{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'css/car_race.css' %}">{% endblock %}
+{% block content %}
+<section class="race-page">
+  <div class="race-heading"><p class="eyebrow">ARCADE / RACING</p><h1>Neon <span class="gradient-text">Car Racer</span></h1><p>Dodge traffic and survive the neon highway. Use ← → or A / D to steer.</p></div>
+  <div class="race-hud"><div><span>DISTANCE</span><strong id="race-score">0</strong></div><div><span>BEST THIS RUN</span><strong id="race-best">0</strong></div><div><span>SPEED</span><strong id="race-speed">1x</strong></div></div>
+  <div class="race-stage"><canvas id="race-canvas" width="420" height="640" aria-label="Car racing game"></canvas><div id="race-overlay" class="race-overlay"><div class="race-modal"><div class="race-icon">🏎️</div><h2>Ready to race?</h2><p>Steer between lanes and avoid the traffic. Your distance is your score.</p><button id="race-start" class="button button-primary" type="button">Start race ↗</button></div></div></div>
+  <div class="race-controls"><button type="button" id="race-left" aria-label="Steer left">←</button><span>STEER</span><button type="button" id="race-right" aria-label="Steer right">→</button></div>
+  <p id="race-message" class="race-message" aria-live="polite">Press Start race to begin.</p>
+  {% csrf_token %}
+  <div class="race-bottom"><a class="button button-quiet" href="{% url 'game_library' %}">← Back to game library</a><a class="text-link" href="{% url 'leaderboard' %}">View leaderboard ↗</a></div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{% static 'js/car_race.js' %}" defer></script>{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Click Rush — Neon Arcade{% endblock %}
+{% block extra_head %}<meta name="csrf-token" content="{{ csrf_token }}">{% endblock %}
+{% block content %}
+<section class="page-intro compact-intro"><p class="eyebrow">BROWSER GAME / SPEED TEST</p><h1>Click <span class="gradient-text">Rush</span></h1><p>Click as many times as you can in 10 seconds.</p></section>
+<section class="snake-layout"><div class="snake-main"><div class="game-topbar"><span>10 SECOND CHALLENGE</span><span id="click-state">READY</span></div><div class="click-arena"><div id="click-count">0</div><button id="click-target" class="click-target" disabled>START</button><p id="click-timer">10.0 seconds</p></div><div class="snake-controls"><button id="click-start" class="button button-primary">▶ Start challenge</button></div></div><aside class="snake-sidebar"><div class="score-box"><span>YOUR CLICKS</span><strong id="click-score">000</strong><small>CLICKS</small></div><div class="controls-info"><h3>HOW TO PLAY</h3><p>Press start, then click the glowing button as quickly as possible before the timer ends.</p></div><div>{% if user.is_authenticated %}<button id="click-save" class="button button-primary full-button" disabled>Save score</button><p id="click-status" class="fine-print"></p>{% else %}<a class="button button-primary full-button" href="{% url 'login' %}">Log in to save scores</a>{% endif %}</div></aside></section>
+{% endblock %}
+{% block scripts %}<script src="{% static 'js/click.js' %}"></script>{% endblock %}

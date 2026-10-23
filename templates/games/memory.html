@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Memory Match — Neon Arcade{% endblock %}
+{% block extra_head %}<meta name="csrf-token" content="{{ csrf_token }}">{% endblock %}
+{% block content %}
+<section class="page-intro compact-intro"><p class="eyebrow">BROWSER GAME / PUZZLE</p><h1>Memory <span class="gradient-text">Match</span></h1><p>Find all matching pairs in as few moves as possible.</p></section>
+<section class="snake-layout"><div class="snake-main"><div class="game-topbar"><span>MEMORY CHALLENGE</span><span id="memory-state">READY</span></div><div id="memory-board" class="memory-board" aria-label="Memory cards"></div><div class="snake-controls"><button id="memory-start" class="button button-primary">▶ Start game</button><button id="memory-restart" class="button button-quiet">↻ Restart</button></div></div><aside class="snake-sidebar"><div class="score-box"><span>MOVES</span><strong id="memory-moves">000</strong></div><div class="score-box score-box-alt"><span>PAIRS FOUND</span><strong id="memory-pairs">0 / 8</strong></div><div class="controls-info"><h3>HOW TO PLAY</h3><p>Flip two cards at a time and find matching symbols.</p><p>Score is based on how few moves you need.</p></div><div>{% if user.is_authenticated %}<button id="memory-save" class="button button-primary full-button" disabled>Save score</button><p id="memory-status" class="fine-print"></p>{% else %}<a class="button button-primary full-button" href="{% url 'login' %}">Log in to save scores</a>{% endif %}</div></aside></section>
+{% endblock %}
+{% block scripts %}<script src="{% static 'js/memory.js' %}"></script>{% endblock %}

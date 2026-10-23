@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }} — Neon Arcade{% endblock %}
+{% block content %}
+<section class="auth-wrap"><div class="auth-aside"><p class="eyebrow">WELCOME TO THE ARCADE</p><h1>Your next<br>level <span class="gradient-text">awaits.</span></h1><p>Keep track of your scores, save your progress, and find your next favorite game.</p><div class="auth-decoration">N<span>+</span></div></div><div class="auth-card"><p class="eyebrow">PLAYER ACCOUNT</p><h2>{{ page_title }}</h2><form method="post" class="stack-form">{% csrf_token %}
+{% for field in form %}<div class="form-field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% if field.help_text %}<div class="help-text">{{ field.help_text|safe }}</div>{% endif %}{% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}</div>{% endfor %}
+{% if form.non_field_errors %}<div class="field-error">{{ form.non_field_errors }}</div>{% endif %}
+<button class="button button-primary full-button" type="submit">{% if mode == 'signup' %}Create account ↗{% else %}Log in ↗{% endif %}</button></form>
+<p class="auth-switch">{% if mode == 'signup' %}Already have an account? <a href="{% url 'login' %}">Log in</a>{% else %}New to Neon Arcade? <a href="{% url 'signup' %}">Create an account</a>{% endif %}</p></div></section>
+{% endblock %}

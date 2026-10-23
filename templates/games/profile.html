@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Player Profile — Neon Arcade{% endblock %}
+{% block content %}
+<section class="page-intro"><p class="eyebrow">PLAYER DASHBOARD</p><h1>Welcome, <span class="gradient-text">{{ user.username }}</span></h1><p>Your scores, your games, your next level.</p></section>
+<div class="profile-grid"><div class="profile-stat"><span>PLAYER</span><strong>{{ user.username }}</strong><small>Member of Neon Arcade</small></div><div class="profile-stat"><span>SCORES SAVED</span><strong>{{ scores|length }}</strong><small>Recent score records</small></div><div class="profile-stat"><span>QUICK START</span><strong>Snake</strong><a href="{% url 'snake_game' %}">Play now ↗</a></div></div>
+<section class="section-block"><div class="section-heading"><div><p class="eyebrow">YOUR PROGRESS</p><h2>Recent <span class="gradient-text">scores</span></h2></div></div><div class="leaderboard">{% for score in scores %}<div class="leader-row"><span class="leader-rank">{{ forloop.counter|stringformat:"02d" }}</span><span class="leader-name">{{ score.game.title }} <small>{{ score.created_at|date:"M j, Y" }}</small></span><span class="leader-points">{{ score.points }} PTS</span></div>{% empty %}<p class="muted-copy">No scores saved yet. Play Snake while logged in to record your first score.</p><a class="button button-primary" href="{% url 'snake_game' %}">Play Snake ↗</a>{% endfor %}</div></section>
+{% endblock %}

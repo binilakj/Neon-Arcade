@@ -5,7 +5,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Development only. Use environment variables for production secrets.
 SECRET_KEY = "django-insecure-change-this-before-deployment"
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["neon-arcade-o73k.onrender.com",
+    "localhost",
+    "127.0.0.1",]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
